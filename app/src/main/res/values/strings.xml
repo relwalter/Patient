@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">健康不用等</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">电子邮箱</string>
+    <string name="prompt_password">密码</string>
+    <string name="prompt_card">诊疗卡号</string>
+    <string name="prompt_phone">手机号码</string>
+    <string name="prompt_gender">性别</string>
+    <string name="prompt_age">年龄</string>
+    <string name="prompt_realname">姓名</string>
+    <string name="prompt_height">身高(·cm)</string>
+    <string name="prompt_weight">体重(·kg)</string>
+    <string name="prompt_temp">体温(·℃)</string>
+    <string name="prompt_breath">呼吸(·pm)</string>
+    <string name="prompt_pulse">脉搏(·bpm)</string>
+    <string name="prompt_blsugar">血糖(·mmol/L)</string>
+    <string name="prompt_pressure_c">收缩压(·mmHg)</string>
+    <string name="prompt_pressure_r">舒张压(·mmHg)</string>
+    <string name="prompt_more">病情描述</string>
+    <string name="action_sign_in">登录</string>
+    <string name="action_new_user">新用户</string>
+    <string name="action_sign_up">注册</string>
+    <string name="action_sign_in_short">立即登录</string>
+    <string name="error_invalid_email">输入格式不正确</string>
+    <string name="error_invalid_password">密码长度有误</string>
+    <string name="error_incorrect_password">密码错误</string>
+    <string name="error_field_required">请填写此字段</string>
+    <string name="permission_rationale">"抱歉，权限指示需要完善电子邮箱信息"</string>
+    <string name="agreement">同意用户服务条款</string>
+</resources>

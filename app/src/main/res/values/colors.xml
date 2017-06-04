@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3f92b5</color>
+    <color name="colorPrimaryDark">#30789f</color>
+    <color name="colorAccent">#f44c85</color>
+    <color name="tipImportant">#ff6640</color>
+    <color name="green">#b1c914</color>
+    <color name="orange">#f89605</color>
+    <color name="dateRed">#c43969</color>
+    <color name="lakeBlue">#48a7c2</color>
+    <color name="white">#ffffff</color>
+</resources>
