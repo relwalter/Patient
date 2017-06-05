@@ -21,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,10 +60,10 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
 
     // UI references.
     private AutoCompleteTextView mEmailView;
-    private EditText mPasswordView,mCardView,mPhoneView;
-    private View mProgressView,mSignupFormView;
+    private EditText mPasswordView,mRPasswordView,mCardView,mPhoneView;
     private UserRepository userRepository;
     private User current;
+    private String email,password,card,phone,rPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,19 +78,19 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email_signup);
         populateAutoComplete();
         mPasswordView = (EditText) findViewById(R.id.password_signup);
+        mRPasswordView = (EditText) findViewById(R.id.rpassword_signup);
         mCardView = (EditText) findViewById(R.id.card_signup);
         mPhoneView = (EditText) findViewById(R.id.phone_signup);
 
         mPhoneView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.signup || id == EditorInfo.IME_NULL) {
+                if (id == R.id.signup) {
                     if(attemptSignup()){
                         Intent intent
                                 =new Intent(SignupActivity.this, CompleteInfoActivity.class);
-                        intent.putExtra("card",mCardView.getText().toString());
+                        intent.putExtra("card",card);
                         startActivity(intent);
-                        finish();
                     }
                     return true;
                 }
@@ -102,15 +103,12 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
             public void onClick(View view) {
                 if(attemptSignup()){
                     Intent intent=new Intent(SignupActivity.this,CompleteInfoActivity.class);
-                    intent.putExtra("card",mCardView.getText().toString());
+                    intent.putExtra("card",card);
                     startActivity(intent);
                     finish();
                 }
             }
         });
-
-        mSignupFormView = findViewById(R.id.signup_form);
-        mProgressView = findViewById(R.id.signup_progress);
 
     }
 
@@ -179,16 +177,19 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
+        mRPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-        String card = mCardView.getText().toString();
-        String phone = mPhoneView.getText().toString();
+        email = mEmailView.getText().toString();
+        password = mPasswordView.getText().toString();
+        rPassword = mRPasswordView.getText().toString();
+        card = mCardView.getText().toString();
+        phone = mPhoneView.getText().toString();
         current.setEml(email);
         current.setPsw(password);
         current.setCard(card);
         current.setPhone(phone);
+        Log.d("signup",current.toString());
 
         boolean cancel = false;
         View focusView = null;
@@ -197,6 +198,18 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
+            cancel = true;
+        }
+
+        if (!TextUtils.isEmpty(rPassword) && !isPasswordValid(rPassword)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mRPasswordView;
+            cancel = true;
+        }
+
+        if (!TextUtils.equals(password,rPassword)) {
+            mRPasswordView.setError(getString(R.string.error_incorrect_rpassword));
+            focusView = mRPasswordView;
             cancel = true;
         }
 
@@ -219,18 +232,19 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
+//            showProgress(true);
             switch(userRepository.addUser(current)){
                 case 1:{
-                    Toast.makeText(this,"注册成功！进入下一步",Toast.LENGTH_SHORT);
+                    Toast.makeText(this,"注册成功！进入下一步",Toast.LENGTH_SHORT).show();
                     return true;
                 }
                 case -1:{
-                    Toast.makeText(this,"注册失败！用户已存在",Toast.LENGTH_SHORT);
+                    Toast.makeText(this,"注册失败！用户已存在",Toast.LENGTH_SHORT).show();
+                    mEmailView.requestFocus();
                     return false;
                 }
                 default:{
-                    Toast.makeText(this,"注册失败！请稍后尝试",Toast.LENGTH_SHORT);
+                    Toast.makeText(this,"注册失败！请稍后尝试",Toast.LENGTH_SHORT).show();
                     return false;
                 }
             }
@@ -249,41 +263,6 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
         return password.length() > 4;
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mSignupFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mSignupFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mSignupFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mSignupFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {

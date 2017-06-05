@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:paddingBottom="20dp"
+            android:paddingBottom="15dp"
             app:srcCompat="@mipmap/icon_patient" />
 
     <TextView
@@ -25,22 +25,15 @@
             android:layout_height="wrap_content"
             android:id="@+id/textView"
             android:textSize="22sp"
-            android:paddingBottom="20dp"
+            android:paddingBottom="10dp"
             android:textAlignment="center"/>
-    <ProgressBar
-            android:id="@+id/signup_progress"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:visibility="gone"/>
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="以下信息均为必填："
             android:textSize="14sp"
-            android:paddingTop="20dp"
-            android:layout_marginBottom="10dp"
+            android:paddingTop="5dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp" android:textColor="@color/dateRed"/>
     <ScrollView
@@ -81,6 +74,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/prompt_password"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:textSize="15sp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:singleLine="true"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <EditText
+                        android:id="@+id/rpassword_signup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_rpassword"
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:textSize="15sp"

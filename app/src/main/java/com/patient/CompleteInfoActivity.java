@@ -3,6 +3,7 @@ package com.patient;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -53,13 +54,18 @@ public class CompleteInfoActivity extends AppCompatActivity {
 
     // UI references.
     private EditText mNameView,mGenderView;
-    private DatePicker mBdayPicker;
-    private View mProgressView;
-    private View mCompleteFormView;
+    private TextView mBirthView;
+    private Button mCompleteButton;
     private PatientRepository patientRepository;
     private Patient current;
-    private String card=getIntent().getExtras().getString("card");
-    private int nowYear,year,month,day;
+    private String card;
+    private int nowYear,nowMonth,nowDay,year,month,day;
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,24 +73,20 @@ public class CompleteInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_complete_info);
         patientRepository=new PatientRepository(this);
         current=new Patient();
+        card=getIntent().getStringExtra("card");
         // Set up the login form.
         mNameView = (EditText) findViewById(R.id.name_signup);
         mGenderView = (EditText) findViewById(R.id.gender_signup);
-        mBdayPicker = (DatePicker) findViewById(R.id.signup_datePicker);
+        mBirthView = (TextView) findViewById(R.id.birth_complete);
         Calendar c = Calendar.getInstance();
         nowYear = c.get(Calendar.YEAR);
+        nowMonth = c.get(Calendar.MONTH)+1;
+        nowDay = c.get(Calendar.DAY_OF_MONTH);
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
-        mBdayPicker.init(year,month,day,new OnDateChangedListener(){
-            @Override
-            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                CompleteInfoActivity.this.year=year;
-                CompleteInfoActivity.this.month=monthOfYear;
-                CompleteInfoActivity.this.day=dayOfMonth;
-            }
-        });
-        Button mCompleteButton = (Button) findViewById(R.id.complete_button);
+        mBirthView.setText(year+" - "+(month+1)+" - "+day);
+        mCompleteButton = (Button) findViewById(R.id.sign_up_button);
         mCompleteButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,9 +97,19 @@ public class CompleteInfoActivity extends AppCompatActivity {
                 }
             }
         });
-
-        mCompleteFormView = findViewById(R.id.complete_form);
-        mProgressView = findViewById(R.id.login_progress);
+        mBirthView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog.OnDateSetListener listener=new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        mBirthView.setText(year+" - "+(monthOfYear+1)+" - "+dayOfMonth);
+                    }
+                };
+                DatePickerDialog dialog=new DatePickerDialog(CompleteInfoActivity.this,R.style.DiaglogTheme,listener,Integer.parseInt(mBirthView.getText().toString().split(" - ")[0]),Integer.parseInt(mBirthView.getText().toString().split(" - ")[1])-1,Integer.parseInt(mBirthView.getText().toString().split(" - ")[2]));
+                dialog.show();
+            }
+        });
     }
 
 
@@ -115,10 +127,14 @@ public class CompleteInfoActivity extends AppCompatActivity {
         // Store values at the time of the login attempt.
         String name = mNameView.getText().toString();
         String gender = mGenderView.getText().toString();
+        String birth = mBirthView.getText().toString();
+        int yearOfBirth = Integer.parseInt(birth.split(" - ")[0]);
+        int monthOfBirth = Integer.parseInt(birth.split(" - ")[1]);
+        int dayOfBirth = Integer.parseInt(birth.split(" - ")[2]);
         current.setCard(card);
         current.setName(name);
         current.setGender(gender);
-        current.setAge(nowYear-year);
+        current.setAge(nowYear-yearOfBirth);
 
         boolean cancel = false;
         View focusView = null;
@@ -136,6 +152,19 @@ public class CompleteInfoActivity extends AppCompatActivity {
             cancel = true;
         }
 
+        if (!TextUtils.equals(gender.toString(),"男".toString())||!TextUtils.equals(gender.toString(),"女".toString()) ||!TextUtils.equals(gender.toString(),"Male".toString())||!TextUtils.equals(gender.toString(),"Female".toString())) {
+            mGenderView.setError("格式不正确");
+            focusView = mGenderView;
+            cancel = true;
+        }
+
+        if (yearOfBirth>nowYear
+                ||(yearOfBirth==nowYear&&monthOfBirth>nowMonth)||(yearOfBirth==nowYear&&monthOfBirth==nowMonth&&dayOfBirth>nowDay)) {
+            mBirthView.setError("出生日期不能大于目前日期");
+            focusView = mBirthView;
+            cancel = true;
+        }
+
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -144,117 +173,22 @@ public class CompleteInfoActivity extends AppCompatActivity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
             switch(patientRepository.addPatient(current)){
                 case 1:{
-                    Toast.makeText(this,"注册成功，即将返回登录界面",Toast.LENGTH_SHORT);
+                    Toast.makeText(this,"注册成功，即将返回登录界面",Toast.LENGTH_SHORT).show();
                     return true;
                 }
                 case -1: {
-                    Toast.makeText(this,"资料已存在，正在跳过此步骤",Toast.LENGTH_SHORT);
+                    Toast.makeText(this,"资料已存在，正在跳过此步骤",Toast.LENGTH_SHORT).show();
                     return false;
                 }
                 default:{
-                    Toast.makeText(this,"注册失败，请稍候再次重试",Toast.LENGTH_SHORT);
+                    Toast.makeText(this,"注册失败，请稍候再次重试",Toast.LENGTH_SHORT).show();
                     return false;
                 }
             }
         }
     }
 
-
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mCompleteFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mCompleteFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mCompleteFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mCompleteFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
-
-
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-//    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-//
-//        private final String mEmail;
-//        private final String mPassword;
-//
-//        UserLoginTask(String email, String password) {
-//            mEmail = email;
-//            mPassword = password;
-//        }
-//
-//        @Override
-//        protected Boolean doInBackground(Void... params) {
-//            // TODO: attempt authentication against a network service.
-//
-//            try {
-//                // Simulate network access.
-//                Thread.sleep(2000);
-//            } catch (InterruptedException e) {
-//                return false;
-//            }
-//
-//            for (String credential : DUMMY_CREDENTIALS) {
-//                String[] pieces = credential.split(":");
-//                if (pieces[0].equals(mEmail)) {
-//                    // Account exists, return true if the password matches.
-//                    return pieces[1].equals(mPassword);
-//                }
-//            }
-//
-//            // TODO: register the new account here.
-//            return true;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(final Boolean success) {
-//            mAuthTask = null;
-//            showProgress(false);
-//
-//            if (success) {
-//                finish();
-//            } else {
-//                mPasswordView.setError(getString(R.string.error_incorrect_password));
-//                mPasswordView.requestFocus();
-//            }
-//        }
-//
-//        @Override
-//        protected void onCancelled() {
-//            mAuthTask = null;
-//            showProgress(false);
-//        }
-//    }
 }
 

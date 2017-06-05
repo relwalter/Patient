@@ -28,8 +28,10 @@ public class UserRepository {
         if(user!=null){
             Cursor cursor=db.rawQuery("SELECT * FROM user WHERE eml=?",new String[]{user.getEml()});
             if (cursor.getCount()>0){
+                cursor.close();
                 return -1;
             }else{
+                cursor.close();
                 try{
                     db.execSQL("INSERT INTO user(card,eml,psw,phone) values(?,?,?,?)",user.getAll());
                     return 1;
@@ -46,13 +48,17 @@ public class UserRepository {
     public int isValid(User user){
         Cursor cursor1 = db.rawQuery("SELECT * FROM user WHERE eml=?",new String[]{user.getEml()});
         if(cursor1.getCount()>0){
+            cursor1.close();
             Cursor cursor2 = db.rawQuery("SELECT * FROM user WHERE eml=? AND psw=?",new String[]{user.getEml(),user.getPsw()});
             if(cursor2.getCount()>0){
+                cursor2.close();
                 return 1;
             }else{
+                cursor2.close();
                 return 0;
             }
         }else{
+            cursor1.close();
             return -1;
         }
 
@@ -82,6 +88,7 @@ public class UserRepository {
     public int resetUserPsw(User user){
         Cursor cursor =db.rawQuery("SELECT * FROM user WHERE eml=? AND card=? AND phone=?",new String[]{user.getEml(),user.getCard(),user.getPhone()});
         if(cursor.getCount()>0){
+            cursor.close();
             try{
                 db.execSQL("UPDATE user SET psw=? WHERE eml=?",new String[]{user.getPsw(),user.getEml()});
                 return 1;
@@ -109,6 +116,7 @@ public class UserRepository {
         if(cursor.getCount()>0){
             return new User(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4));
         }else{
+            cursor.close();
             return null;
         }
     }

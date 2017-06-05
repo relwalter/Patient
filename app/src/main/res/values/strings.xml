@@ -4,6 +4,7 @@
     <!-- Strings related to login -->
     <string name="prompt_email">电子邮箱</string>
     <string name="prompt_password">密码</string>
+    <string name="prompt_rpassword">确认密码</string>
     <string name="prompt_card">诊疗卡号</string>
     <string name="prompt_phone">手机号码</string>
     <string name="prompt_gender">性别</string>
@@ -25,6 +26,7 @@
     <string name="error_invalid_email">输入格式不正确</string>
     <string name="error_invalid_password">密码长度有误</string>
     <string name="error_incorrect_password">密码错误</string>
+    <string name="error_incorrect_rpassword">两次输入的密码不一致</string>
     <string name="error_field_required">请填写此字段</string>
     <string name="permission_rationale">"抱歉，权限指示需要完善电子邮箱信息"</string>
     <string name="agreement">同意用户服务条款</string>

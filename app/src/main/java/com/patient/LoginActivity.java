@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-        userRepository=UserRepository.getInstance(this);
+        userRepository=UserRepository.getInstance(LoginActivity.this);
         current=new User();
 
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email_login);
@@ -176,6 +176,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         String password = mPasswordView.getText().toString();
         current.setEml(email);
         current.setPsw(password);
+        Log.d("current",current.toString());
 
         boolean cancel = false;
         View focusView = null;
@@ -206,18 +207,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
+//            showProgress(true);
             switch(userRepository.isValid(current)) {
                 case 1:{
-                    Toast.makeText(this,"登录成功",Toast.LENGTH_SHORT);
+                    Log.d("login","success");
+                    Toast.makeText(this,"登录成功",Toast.LENGTH_SHORT).show();
                     return true;
                 }
                 case -1: {
-                    Toast.makeText(this,"用户不存在",Toast.LENGTH_SHORT);
+                    Log.d("login","not exist");
+                    Toast.makeText(this,"用户不存在",Toast.LENGTH_SHORT).show();
+                    mEmailView.requestFocus();
                     return false;
                 }
                 default:{
-                    Toast.makeText(this,"登录失败，邮箱或密码输入错误",Toast.LENGTH_SHORT);
+                    Log.d("login","fail");
+                    Toast.makeText(this,"登录失败，邮箱或密码输入错误",Toast.LENGTH_SHORT).show();
                     return false;
                 }
             }
