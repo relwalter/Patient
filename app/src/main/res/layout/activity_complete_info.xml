@@ -20,24 +20,17 @@
             app:srcCompat="@mipmap/icon_patient" />
 
     <TextView
-            android:text="欢迎注册新用户"
+            android:text="完善基本资料"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView"
             android:textSize="22sp"
             android:paddingBottom="20dp"
             android:textAlignment="center"/>
-    <ProgressBar
-            android:id="@+id/complete_progress"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:visibility="gone"/>
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="继续填写（以下信息不会泄漏）："
+            android:text="请填写（以下信息不会泄漏）："
             android:textSize="14sp"
             android:paddingTop="20dp"
             android:layout_marginBottom="15dp"
@@ -90,10 +83,12 @@
             </android.support.design.widget.TextInputLayout>
 
             <TextView
+                    android:id="@+id/birth_complete_popup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=" 出生日期"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorAccent"
                     android:layout_marginTop="15dp"
                     android:layout_marginLeft="50dp"
                     android:layout_marginRight="50dp"
@@ -148,12 +143,12 @@
                     style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginRight="50dp"
                     android:layout_marginLeft="50dp"
                     android:textColor="@color/white"
                     android:background="@color/orange"
-                    android:text="立即注册"
+                    android:text="完成"
                     android:textStyle="bold"/>
         </LinearLayout>
     </ScrollView>

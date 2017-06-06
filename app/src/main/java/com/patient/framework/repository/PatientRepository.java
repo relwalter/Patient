@@ -18,8 +18,10 @@ public class PatientRepository {
         if(patient!=null){
             Cursor cursor=db.rawQuery("SELECT * FROM patient WHERE card=?",new String[]{patient.getCard()});
             if (cursor.getCount()>0){
+                cursor.close();
                 return -1;
             }else{
+                cursor.close();
                 try{
                     db.execSQL("INSERT INTO patient(name,gender,age,card) values(?,?,?,?)",patient.getAll());
                     return 1;
@@ -53,6 +55,28 @@ public class PatientRepository {
         }catch (Exception e) {
             Log.d("错误", e.getMessage().toString());
             return false;
+        }
+    }
+
+    public boolean checkPatient(String card){
+        if(card!=null){
+            Cursor cursor=db.rawQuery("SELECT * FROM patient WHERE card=?",new String[]{card});
+            if (cursor.getCount()>0){
+                cursor.close();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Patient getPatient(String card){
+        Cursor cursor =db.rawQuery("SELECT * FROM patient WHERE card=?",new String[]{card});
+        if(cursor.getCount()>0){
+            cursor.moveToFirst();
+            return new Patient(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getInt(3),cursor.getString(4));
+        }else{
+            cursor.close();
+            return null;
         }
     }
 }

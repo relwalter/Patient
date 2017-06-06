@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+                android:id="@+id/nav_index"
+                android:icon="@mipmap/ic_widgets_black_48dp"
+                android:title="开始"
+                android:checked="true"/>
+        <item
+                android:id="@+id/nav_act1"
+                android:icon="@mipmap/ic_assistant_black_48dp"
+                android:title="@string/title_1"/>
+        <item
+                android:id="@+id/nav_act2"
+                android:icon="@mipmap/ic_assignment_ind_black_48dp"
+                android:title="@string/title_2"/>
+        <item
+                android:id="@+id/nav_act3"
+                android:icon="@mipmap/ic_assignment_black_48dp"
+                android:title="@string/title_3"/>
+        <item
+                android:id="@+id/nav_setting"
+                android:icon="@mipmap/ic_settings_black_48dp"
+                android:title="设置"/>
+    </group>
+
+    <item android:title="其他">
+        <menu>
+            <item
+                    android:id="@+id/nav_share"
+                    android:icon="@mipmap/ic_share_black_48dp"
+                    android:title="分享"/>
+            <item
+                    android:id="@+id/nav_send"
+                    android:icon="@mipmap/ic_send_black_48dp"
+                    android:title="反馈"/>
+        </menu>
+    </item>
+    <group>
+        <item
+                android:id="@+id/nav_quit"
+                android:icon="@mipmap/ic_directions_run_black_48dp"
+                android:title="退出">
+        </item>
+    </group>
+
+</menu>

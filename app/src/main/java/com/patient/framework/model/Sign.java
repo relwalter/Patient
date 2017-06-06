@@ -127,4 +127,8 @@ public class Sign {
     public String[] getAll(){
         return new String[]{Integer.toString(pid),Float.toString(height),Float.toString(weight),Float.toString(temp),Float.toString(breath),Float.toString(pulse),Float.toString(pressure),Float.toString(blsugar),more};
     }
+
+    public String[] getInfo(){
+        return new String[]{Integer.toString(pid),Float.toString(height),Float.toString(weight),Float.toString(temp),Float.toString(breath),Float.toString(pulse),Float.toString(pressure),Float.toString(blsugar),more};
+    }
 }

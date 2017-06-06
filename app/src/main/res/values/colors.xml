@@ -9,4 +9,7 @@
     <color name="dateRed">#c43969</color>
     <color name="lakeBlue">#48a7c2</color>
     <color name="white">#ffffff</color>
+    <color name="gray">#6e6e6e</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

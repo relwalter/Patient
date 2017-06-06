@@ -1,60 +1,30 @@
 package com.patient;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
+import android.content.SharedPreferences;
+import android.graphics.Paint;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.view.KeyEvent;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
 import android.widget.*;
-import android.widget.DatePicker.OnDateChangedListener;
 import com.patient.framework.model.Patient;
 import com.patient.framework.repository.PatientRepository;
-
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
-import static android.Manifest.permission.READ_CONTACTS;
 
-/**
- * A login screen that offers login via email/password.
- */
 public class CompleteInfoActivity extends AppCompatActivity {
 
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
     private static final int REQUEST_READ_CONTACTS = 0;
-
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-//    private UserLoginTask mAuthTask = null;
 
     // UI references.
     private EditText mNameView,mGenderView;
-    private TextView mBirthView;
+    private TextView mBirthView,mBirthPopup;
     private Button mCompleteButton;
     private PatientRepository patientRepository;
     private Patient current;
@@ -74,10 +44,13 @@ public class CompleteInfoActivity extends AppCompatActivity {
         patientRepository=new PatientRepository(this);
         current=new Patient();
         card=getIntent().getStringExtra("card");
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         // Set up the login form.
         mNameView = (EditText) findViewById(R.id.name_signup);
         mGenderView = (EditText) findViewById(R.id.gender_signup);
         mBirthView = (TextView) findViewById(R.id.birth_complete);
+        mBirthPopup = (TextView) findViewById(R.id.birth_complete_popup);
         Calendar c = Calendar.getInstance();
         nowYear = c.get(Calendar.YEAR);
         nowMonth = c.get(Calendar.MONTH)+1;
@@ -90,11 +63,7 @@ public class CompleteInfoActivity extends AppCompatActivity {
         mCompleteButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(attemptComplete()){
-                    Intent intent=new Intent(CompleteInfoActivity.this,LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+                attemptComplete();
             }
         });
         mBirthView.setOnClickListener(new OnClickListener() {
@@ -112,13 +81,19 @@ public class CompleteInfoActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:{
+                startActivity(new Intent(CompleteInfoActivity.this,LoginActivity.class));
+                finish();
+                break;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
-    private boolean attemptComplete() {
+    private void attemptComplete() {
 
         // Reset errors.
         mNameView.setError(null);
@@ -135,6 +110,7 @@ public class CompleteInfoActivity extends AppCompatActivity {
         current.setName(name);
         current.setGender(gender);
         current.setAge(nowYear-yearOfBirth);
+        Log.d("complete: ",current.toString());
 
         boolean cancel = false;
         View focusView = null;
@@ -152,39 +128,47 @@ public class CompleteInfoActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if (!TextUtils.equals(gender.toString(),"男".toString())||!TextUtils.equals(gender.toString(),"女".toString()) ||!TextUtils.equals(gender.toString(),"Male".toString())||!TextUtils.equals(gender.toString(),"Female".toString())) {
+        if (!("男".equals(gender)||"女".equals(gender)||"Male".equals(gender)||"Female".equals(gender))) {
             mGenderView.setError("格式不正确");
             focusView = mGenderView;
             cancel = true;
         }
 
-        if (yearOfBirth>nowYear
-                ||(yearOfBirth==nowYear&&monthOfBirth>nowMonth)||(yearOfBirth==nowYear&&monthOfBirth==nowMonth&&dayOfBirth>nowDay)) {
-            mBirthView.setError("出生日期不能大于目前日期");
-            focusView = mBirthView;
+        if (yearOfBirth>nowYear||(yearOfBirth==nowYear&&monthOfBirth>nowMonth)||(yearOfBirth==nowYear&&monthOfBirth==nowMonth&&dayOfBirth>nowDay)) {
+            mBirthPopup.setError("");
+            mBirthPopup.setText("出生日期（不能晚于今天）");
+            focusView = mBirthPopup;
+            mBirthView.setTextColor(R.color.dateRed);
+            mBirthView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             cancel = true;
         }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
-            return false;
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
             switch(patientRepository.addPatient(current)){
                 case 1:{
-                    Toast.makeText(this,"注册成功，即将返回登录界面",Toast.LENGTH_SHORT).show();
-                    return true;
+                    if(getSharedPreferences("current",MODE_PRIVATE)
+                            .getBoolean("valid",false)){
+                        Toast.makeText(this,"登记成功",Toast.LENGTH_SHORT).show();
+                        Intent intent
+                                =new Intent(CompleteInfoActivity.this,Main2Activity.class);
+                        startActivity(intent);
+                        finish();
+                    }else{
+                        Toast.makeText(this,"登记成功，即将返回登录界面",Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(CompleteInfoActivity.this,LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    break;
                 }
                 case -1: {
                     Toast.makeText(this,"资料已存在，正在跳过此步骤",Toast.LENGTH_SHORT).show();
-                    return false;
+                    break;
                 }
                 default:{
-                    Toast.makeText(this,"注册失败，请稍候再次重试",Toast.LENGTH_SHORT).show();
-                    return false;
+                    Toast.makeText(this,"登记失败，请稍候再次重试",Toast.LENGTH_SHORT).show();
                 }
             }
         }

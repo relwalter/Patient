@@ -9,7 +9,15 @@ public class Patient {
 
     public Patient() {
     }
-    
+
+    public Patient(int pid, String name, String gender, int age, String card) {
+        this.pid = pid;
+        this.name = name;
+        this.gender = gender;
+        this.age = age;
+        this.card = card;
+    }
+
     public int getId() {
         return pid;
     }
@@ -63,5 +71,9 @@ public class Patient {
 
     public String[] getAll(){
         return new String[]{name,gender,Integer.toString(age),card};
+    }
+
+    public String[] getInfo(){
+        return new String[]{Integer.toString(pid),name,gender,Integer.toString(age),card};
     }
 }

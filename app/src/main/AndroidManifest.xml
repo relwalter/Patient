@@ -23,12 +23,47 @@
             </intent-filter>
         </activity>
         <activity
+                android:name=".MainActivity"
+                android:label="@string/app_name">
+        </activity>
+        <activity
                 android:name=".SignupActivity"
+                android:label="@string/app_name">
+        </activity>
+        <activity
+                android:name=".resetActivity"
+                android:label="@string/app_name">
+        </activity>
+        <activity
+                android:name=".reset2Activity"
                 android:label="@string/app_name">
         </activity>
         <activity
                 android:name=".CompleteInfoActivity"
                 android:label="@string/app_name">
+        </activity>
+        <activity
+                android:name=".SettingsActivity"
+                android:label="@string/title_activity_settings">
+        </activity>
+        <activity
+                android:name=".Main2Activity"
+                android:label="@string/app_name"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+                android:name=".FullscreenActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:label="@string/app_name"
+                android:theme="@style/FullscreenTheme">
+        </activity>
+        <activity
+                android:name=".AboutUsActivity"
+                android:label="@string/title_about">
+            <intent-filter>
+                <action android:name="com.patient.aboutUs"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
         </activity>
     </application>
 

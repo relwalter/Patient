@@ -1,0 +1,24 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <header
+            android:fragment="com.patient.SettingsActivity$GeneralPreferenceFragment"
+            android:title="  帐户设置"
+            android:icon="@drawable/ic_supervisor_account_black_24dp"/>
+
+    <header
+            android:fragment="com.patient.SettingsActivity$NotificationPreferenceFragment"
+            android:title="  消息提醒"
+            android:icon="@drawable/ic_notifications_black_24dp"/>
+
+    <header
+            android:fragment="com.patient.SettingsActivity$DataSyncPreferenceFragment"
+            android:title="  刷新模式"
+            android:icon="@drawable/ic_sync_black_24dp"/>
+    <header
+            android:id="@+id/action_about"
+            android:title="  关于"
+            android:icon="@drawable/ic_info_black_24dp">
+        <intent android:action="com.patient.aboutUs"/>
+    </header>
+
+</preference-headers>

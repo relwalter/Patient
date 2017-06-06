@@ -72,4 +72,8 @@ public class User {
     public String[] getAll(){
         return new String[]{card,eml,psw,phone};
     }
+
+    public String[] getInfo(){
+        return new String[]{Integer.toString(uid),card,eml,psw,phone};
+    }
 }

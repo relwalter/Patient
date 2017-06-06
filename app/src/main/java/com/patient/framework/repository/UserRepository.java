@@ -7,6 +7,9 @@ import android.util.Log;
 import com.patient.framework.model.User;
 import com.patient.framework.service.DBConnector;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserRepository {
 
     private static UserRepository userRepository;
@@ -22,6 +25,17 @@ public class UserRepository {
             userRepository = new UserRepository(context);
         }
         return userRepository;
+    }
+
+    public boolean checkUser(User user){
+        if(user!=null) {
+            Cursor cursor = db.rawQuery("SELECT * FROM user WHERE eml=?", new String[]{user.getEml()});
+            if (cursor.getCount() > 0) {
+                cursor.close();
+                return true;
+            }
+        }
+        return false;
     }
 
     public int addUser(User user){
@@ -86,7 +100,7 @@ public class UserRepository {
     }
 
     public int resetUserPsw(User user){
-        Cursor cursor =db.rawQuery("SELECT * FROM user WHERE eml=? AND card=? AND phone=?",new String[]{user.getEml(),user.getCard(),user.getPhone()});
+        Cursor cursor =db.rawQuery("SELECT * FROM user WHERE eml=? AND card=?",new String[]{user.getEml(),user.getCard()});
         if(cursor.getCount()>0){
             cursor.close();
             try{
@@ -114,6 +128,7 @@ public class UserRepository {
     public User getUser(String eml){
         Cursor cursor =db.rawQuery("SELECT * FROM user WHERE eml=?",new String[]{eml});
         if(cursor.getCount()>0){
+            cursor.moveToFirst();
             return new User(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4));
         }else{
             cursor.close();
