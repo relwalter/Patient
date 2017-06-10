@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.*;
+import com.patient.framework.model.Patient;
 import com.patient.framework.model.User;
 import com.patient.framework.repository.PatientRepository;
 import com.patient.framework.repository.UserRepository;
@@ -49,6 +50,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private UserRepository userRepository;
     private PatientRepository patientRepository;
     private User current;
+    private String email,password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,14 +155,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
+    private void setSharedPreferences(){
+        User currentUser=userRepository.getUser(email);
+        String card = userRepository.getUser(current.getEml()).getCard();
+        patientRepository=new PatientRepository(LoginActivity.this);
+        Patient currentPatient=patientRepository.getPatient(card);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString("name",currentPatient.getName());
+        editor.putString("card",card);
+        editor.putString("eml",email);
+        editor.putString("psw",currentUser.getPsw());
+        editor.putString("phone",currentUser.getPhone());
+        editor.putInt("pid",currentPatient.getId());
+        editor.putString("gender",currentPatient.getGender());
+        editor.putInt("age",currentPatient.getAge());
+        editor.putBoolean("valid",true);
+        editor.commit();
+    }
+
 
     private boolean attemptLogin() {
         mEmailView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        email = mEmailView.getText().toString();
+        password = mPasswordView.getText().toString();
         current.setEml(email);
         current.setPsw(password);
         Log.d("current",current.toString());
@@ -194,12 +214,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 case 1:{
                     Log.d("login","success");
                     String card = userRepository.getUser(current.getEml()).getCard();
-                    SharedPreferences.Editor editor=sharedPreferences.edit();
-                    editor.putString("card",card);
-                    editor.putString("eml",email);
-                    editor.putBoolean("valid",true);
-                    editor.commit();
-                    patientRepository=new PatientRepository(LoginActivity.this);
+                    setSharedPreferences();
                     if(patientRepository.checkPatient(card)){
                         Toast.makeText(this,"登录成功",Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(LoginActivity.this,Main2Activity.class);

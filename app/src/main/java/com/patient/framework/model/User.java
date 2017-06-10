@@ -10,6 +10,13 @@ public class User {
     public User() {
     }
 
+    public User(String card, String eml, String psw, String phone) {
+        this.card = card;
+        this.eml = eml;
+        this.psw = psw;
+        this.phone = phone;
+    }
+
     public User(int uid, String card, String eml, String psw, String phone) {
         this.uid = uid;
         this.card = card;

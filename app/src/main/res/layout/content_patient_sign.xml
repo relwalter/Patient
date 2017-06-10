@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_patient_sign"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.patient.PatinetSignActivity">
+
+    <LinearLayout
+            android:layout_margin="30dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <TextView
+                android:id="@+id/realname_sign"
+                android:text="@string/name"
+                android:textSize="20sp"
+                android:textColor="@color/colorAccent"
+                android:textAlignment="center"
+                android:paddingBottom="@dimen/dp_4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        <TableLayout
+                android:layout_margin="@dimen/dp_20"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TableRow android:paddingBottom="@dimen/dp_4">
+                <TextView
+                        android:text="@string/prompt_height"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <TextView
+                        android:id="@+id/height_sign"
+                        android:text="170"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/colorAccent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+            </TableRow>
+            <TableRow android:paddingTop="@dimen/nav_header_vertical_spacing"
+                      android:paddingBottom="@dimen/dp_4" android:layout_width="match_parent"
+                      android:layout_height="match_parent">
+            <TextView
+                    android:text="@string/prompt_weight"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif-light"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            <TextView
+                    android:id="@+id/weight_sign"
+                    android:text="60"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif-light"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorAccent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </TableRow>
+            <TableRow android:paddingTop="@dimen/nav_header_vertical_spacing"
+                      android:paddingBottom="@dimen/dp_4">
+                <TextView
+                        android:text="@string/prompt_temp"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <TextView
+                        android:id="@+id/temp_sign"
+                        android:text="37.5"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/colorAccent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+            </TableRow>
+            <TableRow android:paddingTop="@dimen/nav_header_vertical_spacing"
+                      android:paddingBottom="@dimen/dp_4">
+                <TextView
+                        android:text="@string/prompt_breath"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <TextView
+                        android:id="@+id/breath_sign"
+                        android:text="50"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/colorAccent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+            </TableRow>
+            <TableRow android:paddingTop="@dimen/nav_header_vertical_spacing"
+                      android:paddingBottom="@dimen/dp_4">
+                <TextView
+                        android:text="@string/prompt_pulse"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <TextView
+                        android:id="@+id/pulse_sign"
+                        android:text="65"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/colorAccent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+            </TableRow>
+            <TableRow android:paddingTop="@dimen/nav_header_vertical_spacing"
+                      android:paddingBottom="@dimen/dp_4">
+                <TextView
+                        android:text="@string/prompt_pressure"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:paddingRight="@dimen/nav_header_vertical_spacing"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <TextView
+                        android:id="@+id/pressure_sign"
+                        android:text="90/110"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/colorAccent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+            </TableRow>
+            <TableRow android:paddingTop="@dimen/nav_header_vertical_spacing"
+                      android:paddingBottom="@dimen/dp_4">
+                <TextView
+                        android:text="@string/prompt_blsugar"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <TextView
+                        android:id="@+id/blsugar_sign"
+                        android:text="6.5"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/colorAccent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+            </TableRow>
+            <TableRow android:paddingTop="@dimen/nav_header_vertical_spacing"
+                      android:paddingBottom="@dimen/dp_4">
+                <TextView
+                        android:text="@string/prompt_more"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <TextView
+                        android:id="@+id/more_sign"
+                        android:text="无"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/colorAccent"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"/>
+            </TableRow>
+        </TableLayout>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

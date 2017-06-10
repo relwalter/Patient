@@ -48,6 +48,7 @@
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:textSize="16sp"
+                        android:fontFamily="sans-serif-light"
                         android:layout_marginLeft="30dp"
                         android:layout_marginRight="30dp"
                         android:paddingBottom="10dp"
@@ -70,6 +71,7 @@
                         android:inputType="number"
                         android:maxLines="1"
                         android:textSize="16sp"
+                        android:fontFamily="sans-serif-light"
                         android:layout_marginLeft="30dp"
                         android:layout_marginRight="30dp"
                         android:singleLine="true"/>
@@ -80,13 +82,10 @@
                     style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginLeft="30dp"
+                    android:layout_margin="30dp"
                     android:textColor="@color/white"
                     android:background="@color/orange"
-                    android:text="@string/action_reset"
-                    android:textStyle="bold"/>
+                    android:text="@string/action_reset"/>
 
         </LinearLayout>
     </ScrollView>

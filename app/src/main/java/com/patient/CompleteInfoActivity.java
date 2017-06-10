@@ -14,7 +14,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.*;
 import com.patient.framework.model.Patient;
+import com.patient.framework.model.User;
 import com.patient.framework.repository.PatientRepository;
+import com.patient.framework.repository.UserRepository;
+
 import java.util.Calendar;
 
 
@@ -27,9 +30,11 @@ public class CompleteInfoActivity extends AppCompatActivity {
     private TextView mBirthView,mBirthPopup;
     private Button mCompleteButton;
     private PatientRepository patientRepository;
+    private UserRepository userRepository;
     private Patient current;
     private String card;
     private int nowYear,nowMonth,nowDay,year,month,day;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -41,7 +46,9 @@ public class CompleteInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_info);
+        userRepository=UserRepository.getInstance(this);
         patientRepository=new PatientRepository(this);
+        sharedPreferences=getSharedPreferences("current",MODE_PRIVATE);
         current=new Patient();
         card=getIntent().getStringExtra("card");
         ActionBar actionBar=getSupportActionBar();
@@ -148,8 +155,8 @@ public class CompleteInfoActivity extends AppCompatActivity {
         } else {
             switch(patientRepository.addPatient(current)){
                 case 1:{
-                    if(getSharedPreferences("current",MODE_PRIVATE)
-                            .getBoolean("valid",false)){
+                    setSharedPreferences();
+                    if(sharedPreferences.getBoolean("valid",false)){
                         Toast.makeText(this,"登记成功",Toast.LENGTH_SHORT).show();
                         Intent intent
                                 =new Intent(CompleteInfoActivity.this,Main2Activity.class);
@@ -157,14 +164,20 @@ public class CompleteInfoActivity extends AppCompatActivity {
                         finish();
                     }else{
                         Toast.makeText(this,"登记成功，即将返回登录界面",Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent(CompleteInfoActivity.this,LoginActivity.class);
+                        Intent intent
+                                =new Intent(CompleteInfoActivity.this,LoginActivity.class);
                         startActivity(intent);
                         finish();
                     }
                     break;
                 }
                 case -1: {
+                    setSharedPreferences();
                     Toast.makeText(this,"资料已存在，正在跳过此步骤",Toast.LENGTH_SHORT).show();
+                    Intent intent
+                            =new Intent(CompleteInfoActivity.this,Main2Activity.class);
+                    startActivity(intent);
+                    finish();
                     break;
                 }
                 default:{
@@ -172,6 +185,22 @@ public class CompleteInfoActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private void setSharedPreferences(){
+        String eml=sharedPreferences.getString("eml","");
+        String card=sharedPreferences.getString("card","");
+        User currentUser=userRepository.getUser(eml);
+        Patient currentPatient=patientRepository.getPatient(card);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString("name",currentPatient.getName());
+        editor.putString("psw",currentUser.getPsw());
+        editor.putString("phone",currentUser.getPhone());
+        editor.putInt("pid",currentPatient.getId());
+        editor.putString("gender",currentPatient.getGender());
+        editor.putInt("age",currentPatient.getAge());
+        editor.putBoolean("valid",true);
+        editor.commit();
     }
 
 }

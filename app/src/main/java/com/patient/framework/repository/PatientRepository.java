@@ -36,10 +36,10 @@ public class PatientRepository {
     }
 
 
-    public boolean updatePatientInfo(Patient patient){
+    public boolean updatePatientInfo(Patient patient,String oldCard){
         try{
-            db.execSQL("UPDATE patient SET name=?,gender=?,age=? WHERE card=?",
-                    new Object[]{patient.getName(),patient.getGender(),patient.getAge(),patient.getCard()});
+            db.execSQL("UPDATE patient SET name=?,gender=?,age=?,card=? WHERE card=?",
+                    new Object[]{patient.getName(),patient.getGender(),patient.getAge(),patient.getCard(),oldCard});
             return true;
         }catch (Exception e) {
             Log.d("错误", e.getMessage().toString());

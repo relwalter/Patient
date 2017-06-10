@@ -1,15 +1,13 @@
 package com.patient;
 
 import android.content.*;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.View;
+import android.view.*;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,33 +15,33 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.*;
 import com.patient.framework.repository.PatientRepository;
-import com.patient.framework.repository.UserRepository;
+import com.patient.framework.utils.SaveDrawable;
+import com.patient.framework.utils.Smoother;
 
 import java.io.File;
-import java.net.URI;
-import java.util.ArrayList;
 
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener,
         CompoundButton.OnCheckedChangeListener {
 
     private long exitTime=0L;
+    private DrawerLayout drawer;
     private ViewPager mViewPager;
     private CardPagerAdapter mCardAdapter;
     private ShadowTransformer mCardShadowTransformer;
     private NavigationView navigationView;
     private TextView mNameTextView,mEmlTextView;
+    private ImageView mImageView;
     private PatientRepository patientRepository;
+    private static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-
+        context=Main2Activity.this;
         patientRepository=new PatientRepository(Main2Activity.this);
         String eml=getSharedPreferences("current",MODE_PRIVATE).getString("eml","");
         String card=getSharedPreferences("current",MODE_PRIVATE).getString("card","");
@@ -51,6 +49,13 @@ public class Main2Activity extends AppCompatActivity
 
         navigationView=(NavigationView)findViewById(R.id.nav_view);
         View headerView=navigationView.getHeaderView(0);
+        mImageView=(ImageView)headerView.findViewById(R.id.imageView);
+        mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Main2Activity.this,ProfileActivity.class));
+            }
+        });
         mNameTextView=(TextView)headerView.findViewById(R.id.name_drawer);
         mEmlTextView=(TextView)headerView.findViewById(R.id.eml_drawer);
 
@@ -62,9 +67,12 @@ public class Main2Activity extends AppCompatActivity
         setSupportActionBar(toolbar);
         mViewPager=(ViewPager) findViewById(R.id.viewPager);
         mCardAdapter=new CardPagerAdapter();
-        mCardAdapter.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
-        mCardAdapter.addCardItem(new CardItem(R.string.title_2, R.string.text_2));
-        mCardAdapter.addCardItem(new CardItem(R.string.title_3, R.string.text_3));
+        mCardAdapter.addCardItem(
+                new CardItem(R.string.title_1, R.string.text_1,"card_btn_reg",R.id.card_view_1));
+        mCardAdapter.addCardItem(
+                new CardItem(R.string.title_2, R.string.text_2,"card_btn_pro",R.id.card_view_2));
+        mCardAdapter.addCardItem(
+                new CardItem(R.string.title_3, R.string.text_3,"card_btn_sign",R.id.card_view_3));
 
         mCardShadowTransformer=new ShadowTransformer(mViewPager, mCardAdapter);
 
@@ -72,7 +80,8 @@ public class Main2Activity extends AppCompatActivity
         mViewPager.setPageTransformer(false, mCardShadowTransformer);
         mViewPager.setOffscreenPageLimit(3);
 
-        DrawerLayout drawer=(DrawerLayout) findViewById(R.id.drawer_layout);
+
+        drawer=(DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this,drawer,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -81,7 +90,15 @@ public class Main2Activity extends AppCompatActivity
 
     @Override
     public void onClick(View view) {
+        String clicked=view.getTag().toString();
+        Log.d("clicked",clicked);
+        if("card_btn_1".equals(clicked)){
 
+        }else if("card_btn_2".equals(clicked)){
+            startActivity(new Intent(Main2Activity.this,ProfileActivity.class));
+        }else if("card_btn_3".equals(clicked)){
+
+        }
     }
 
 
@@ -92,7 +109,6 @@ public class Main2Activity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -108,19 +124,13 @@ public class Main2Activity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main2, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             startActivity(new Intent(Main2Activity.this,SettingsActivity.class));
             return true;
@@ -147,33 +157,22 @@ public class Main2Activity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
+        drawer.closeDrawer(GravityCompat.START);
         if (id == R.id.nav_index) {
 
         } else if (id == R.id.nav_act1) {
 
         } else if (id == R.id.nav_act2) {
-
+            Smoother.startActivity(Main2Activity.this,ProfileActivity.class);
         } else if (id == R.id.nav_act3) {
-
+            Smoother.startActivity(Main2Activity.this,PatinetSignActivity.class);
         } else if (id == R.id.nav_share) {
-            Intent intent = new Intent();
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.setAction(Intent.ACTION_SEND);
-            intent.setType("image/*");
-            Uri imgUri=Uri.fromFile(new File(Environment.getExternalStorageDirectory()+"/download/share.jpg"));
-            intent.putExtra("Kdescription", "我正在试用健康不用等app，在线就能轻松挂号，看病快人一步。自从用上它才知道什么叫做相见恨晚，你也来试试吧！");
-            intent.putExtra(Intent.EXTRA_STREAM, imgUri);
-            startActivity(intent);
+            attemptShare();
         } else if (id == R.id.nav_send) {
-            Toast.makeText(Main2Activity.this,"非常感谢您的反馈！",Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(Main2Activity.this,AboutUsActivity.class));
+            Smoother.startActivity(Main2Activity.this,ScrollingActivity.class);
         } else if (id == R.id.nav_quit) {
             new AlertDialog.Builder(Main2Activity.this).setTitle("提示")
                     .setMessage("真的要退出吗？")
@@ -185,14 +184,45 @@ public class Main2Activity extends AppCompatActivity
                             editor.putBoolean("valid",false);
                             editor.commit();
                             finish();
-                            startActivity(new Intent
-                                    (Main2Activity.this,LoginActivity.class));
+                            Smoother.startActivity(Main2Activity.this,LoginActivity.class);
                         }
                     }).setNegativeButton("返回", null).show();
         } else if (id == R.id.nav_setting){
-            startActivity(new Intent(Main2Activity.this,SettingsActivity.class));
+            Smoother.startActivity(Main2Activity.this,SettingsActivity.class);
         }
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void attemptShare(){
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        ComponentName comp = new ComponentName("com.tencent.mm",
+                "com.tencent.mm.ui.tools.ShareToTimeLineUI");
+        intent.setComponent(comp);
+        intent.setAction(Intent.ACTION_SEND);
+        intent.setType("image/*");
+        SaveDrawable.saveDrawableById(getResources(),R.drawable.share,
+                Environment.getExternalStorageDirectory()+"/download/share.jpg");
+        Uri imgUri;
+//        Resources res = this.getResources();
+//        imgUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
+//                + res.getResourcePackageName(R.drawable.share) + "/"
+//                + res.getResourceTypeName(R.drawable.share) + "/"
+//                + res.getResourceEntryName(R.drawable.share));
+        imgUri=Uri.fromFile(new File(Environment.getExternalStorageDirectory()+"/download/share.jpg"));
+        intent.putExtra("Kdescription", "Hey，我正在试用健康不用等app。在线就能轻松挂号，看病快人一步！自从用上它才知道什么叫做相见恨晚，你也来试试吧！");
+        intent.putExtra(Intent.EXTRA_STREAM, imgUri);
+        startActivity(intent);
+    }
+
+    public static void conduct(String keyword){
+        if(keyword.equals("reg")){
+
+        }else if(keyword.equals("pro")){
+            context.startActivity(new Intent(context,ProfileActivity.class));
+        }else if(keyword.equals("sign")){
+            context.startActivity(new Intent(context,PatinetSignActivity.class));
+        }
+    }
+
 }

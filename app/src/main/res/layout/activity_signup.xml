@@ -32,10 +32,12 @@
             android:layout_height="wrap_content"
             android:text="以下信息均为必填："
             android:textSize="14sp"
+            android:fontFamily="sans-serif-light"
             android:paddingTop="5dp"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp" android:textColor="@color/dateRed"/>
+            android:layout_marginRight="25dp"
+            android:textColor="@color/colorAccent"/>
     <ScrollView
             android:id="@+id/signup_form"
             android:layout_width="match_parent"
@@ -59,6 +61,7 @@
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:textSize="15sp"
+                        android:fontFamily="sans-serif-light"
                         android:layout_marginLeft="25dp"
                         android:layout_marginRight="25dp"
                         android:singleLine="true"/>
@@ -77,6 +80,7 @@
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:textSize="15sp"
+                        android:fontFamily="sans-serif-light"
                         android:layout_marginLeft="25dp"
                         android:layout_marginRight="25dp"
                         android:singleLine="true"/>
@@ -95,6 +99,7 @@
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:textSize="15sp"
+                        android:fontFamily="sans-serif-light"
                         android:layout_marginLeft="25dp"
                         android:layout_marginRight="25dp"
                         android:singleLine="true"/>
@@ -112,6 +117,7 @@
                         android:inputType="number"
                         android:maxLines="1"
                         android:textSize="15sp"
+                        android:fontFamily="sans-serif-light"
                         android:layout_marginLeft="25dp"
                         android:layout_marginRight="25dp"
                         android:singleLine="true"/>
@@ -130,6 +136,7 @@
                         android:inputType="number"
                         android:maxLines="1"
                         android:textSize="15sp"
+                        android:fontFamily="sans-serif-light"
                         android:layout_marginLeft="25dp"
                         android:layout_marginRight="25dp"
                         android:singleLine="true"/>
@@ -145,8 +152,7 @@
                     android:layout_marginLeft="25dp"
                     android:textColor="@color/white"
                     android:background="@color/orange"
-                    android:text="下一步"
-                    android:textStyle="bold"/>
+                    android:text="下一步"/>
 
         </LinearLayout>
     </ScrollView>

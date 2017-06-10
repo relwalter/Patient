@@ -106,6 +106,7 @@ public class SignupActivity extends AppCompatActivity implements LoaderCallbacks
         switch (item.getItemId()) {
             case android.R.id.home:{
                 finish();
+                startActivity(new Intent(SignupActivity.this,LoginActivity.class));
                 break;
             }
         }

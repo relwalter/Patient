@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.READ_PROFILE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
             android:allowBackup="true"
@@ -62,8 +64,34 @@
                 android:label="@string/title_about">
             <intent-filter>
                 <action android:name="com.patient.aboutUs"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+        </activity>
+        <activity
+                android:name=".ProfileActivity"
+                android:label=" "
+                android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="com.patient.profile"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".PatinetSignActivity"
+                android:label=""
+                android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="com.patient.patient_sign"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".ScrollingActivity"
+                android:label=" "
+                android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

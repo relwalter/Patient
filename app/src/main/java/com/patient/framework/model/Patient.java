@@ -10,6 +10,13 @@ public class Patient {
     public Patient() {
     }
 
+    public Patient(String name, String gender, int age, String card) {
+        this.name = name;
+        this.gender = gender;
+        this.age = age;
+        this.card = card;
+    }
+
     public Patient(int pid, String name, String gender, int age, String card) {
         this.pid = pid;
         this.name = name;

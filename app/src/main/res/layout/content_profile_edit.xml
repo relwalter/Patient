@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_profile_edit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.patient.ProfileActivity">
+
+    <LinearLayout
+            android:layout_margin="30dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <TextView
+                android:id="@+id/realname_profile_edit"
+                android:text="@string/name"
+                android:textSize="20sp"
+                android:textAlignment="center"
+                android:paddingTop="30dp"
+                android:paddingBottom="@dimen/dp_4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        <TextView
+                android:id="@+id/eml_profile_edit"
+                android:text="@string/eml"
+                android:textSize="13sp"
+                android:fontFamily="sans-serif-light"
+                android:textAlignment="center"
+                android:paddingTop="@dimen/dp_4"
+                android:paddingBottom="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        <TableLayout
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
+                android:paddingBottom="@dimen/dp_20"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TableRow android:paddingBottom="@dimen/dp_4">
+                <TextView
+                        android:text="@string/prompt_card"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:paddingRight="30dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <EditText
+                        android:id="@+id/card_profile_edit"
+                        android:text="1234567890"
+                        android:textSize="14sp"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:fontFamily="sans-serif-light"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/dateRed"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+            </TableRow>
+            <TableRow android:paddingBottom="@dimen/dp_4">
+                <TextView
+                        android:text="@string/prompt_phone"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <EditText
+                        android:id="@+id/phone_profile_edit"
+                        android:text="12345678910"
+                        android:textSize="14sp"
+                        android:maxLines="1"
+                        android:inputType="number"
+                        android:fontFamily="sans-serif-light"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/dateRed"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+            </TableRow>
+            <TableRow android:paddingBottom="@dimen/dp_4">
+                <TextView
+                        android:text="@string/prompt_realname"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <EditText
+                        android:id="@+id/name_profile_edit"
+                        android:text="@string/name"
+                        android:textSize="14sp"
+                        android:maxLines="1"
+                        android:fontFamily="sans-serif-light"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/dateRed"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+            </TableRow>
+            <TableRow android:paddingBottom="@dimen/dp_4">
+                <TextView
+                        android:text="@string/prompt_gender"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <EditText
+                        android:id="@+id/gender_profile_edit"
+                        android:text="男/女/Male/Female"
+                        android:textSize="14sp"
+                        android:maxLines="1"
+                        android:fontFamily="sans-serif-light"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/dateRed"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+            </TableRow>
+            <TableRow android:paddingBottom="@dimen/dp_4">
+                <TextView
+                        android:text="@string/prompt_age"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <EditText
+                        android:id="@+id/age_profile_edit"
+                        android:text="30"
+                        android:textSize="14sp"
+                        android:maxLines="1"
+                        android:inputType="number"
+                        android:fontFamily="sans-serif-light"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/dateRed"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+            </TableRow>
+        </TableLayout>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
