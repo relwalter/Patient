@@ -164,7 +164,7 @@ public class Main2Activity extends AppCompatActivity
         if (id == R.id.nav_index) {
 
         } else if (id == R.id.nav_act1) {
-
+            Smoother.startActivity(Main2Activity.this,MainActivity.class);
         } else if (id == R.id.nav_act2) {
             Smoother.startActivity(Main2Activity.this,ProfileActivity.class);
         } else if (id == R.id.nav_act3) {

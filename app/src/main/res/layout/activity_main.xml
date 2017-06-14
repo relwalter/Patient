@@ -6,25 +6,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="com.patient.PatinetSignActivity">
+        tools:context="com.patient.MainActivity">
 
     <android.support.design.widget.AppBarLayout
-            android:id="@+id/app_bar4"
+            android:id="@+id/app_bar9"
             android:fitsSystemWindows="true"
-            android:layout_height="@dimen/app_bar_height"
+            android:layout_height="270dp"
             android:layout_width="match_parent"
             android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/toolbar_layout_sign"
+                android:id="@+id/toolbar_layout9"
                 android:fitsSystemWindows="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/heart"
+                android:background="@drawable/default2"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar_sign"
+                    android:id="@+id/toolbar9"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_width="match_parent"
                     app:layout_collapseMode="pin"
@@ -32,17 +32,33 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
+    <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/avatar"
+            app:layout_anchor="@id/app_bar9"
+            app:layout_anchorGravity="bottom|center"/>
+    <RelativeLayout
+            android:layout_marginBottom="120dp"
+            android:layout_gravity="bottom|center"
+            android:layout_width="270dp"
+            android:layout_height="180dp">
+        <com.ldoblem.giftcardlib.GiftCardView
+                android:id="@+id/start_view1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+    </RelativeLayout>
 
-    <include layout="@layout/content_patient_sign"/>
 
     <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab3"
+            android:id="@+id/fab9"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_margin="@dimen/fab_margin"
-            app:layout_anchor="@id/app_bar4"
-            app:layout_anchorGravity="bottom|end"
-            app:srcCompat="@mipmap/ic_mode_edit_white_24dp"
-            app:backgroundTint="@color/lakeBlue"/>
+            android:layout_gravity="bottom|right"
+            app:layout_anchorGravity="bottom|right|end"
+            app:srcCompat="@mipmap/ic_check_white_24dp"
+            app:backgroundTint="@color/darkPink"/>
 
 </android.support.design.widget.CoordinatorLayout>

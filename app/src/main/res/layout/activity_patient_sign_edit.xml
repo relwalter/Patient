@@ -20,7 +20,7 @@
                 android:fitsSystemWindows="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/profile"
+                android:background="@drawable/heart"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <android.support.v7.widget.Toolbar

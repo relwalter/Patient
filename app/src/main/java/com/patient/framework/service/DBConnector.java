@@ -19,6 +19,7 @@ public class DBConnector extends SQLiteOpenHelper{
         db.execSQL("CREATE TABLE IF NOT EXISTS user(uid integer primary key autoincrement,card varchar(20),eml varchar(40),psw varchar(20),phone varchar(15))");
         db.execSQL("CREATE TABLE IF NOT EXISTS patient(pid integer primary key autoincrement,name varchar(20),gender varchar(10),age integer,card varchar(20))");
         db.execSQL("CREATE TABLE IF NOT EXISTS sign(sid integer primary key autoincrement,pid integer,height float,weight float,temp float,breath float,pulse float,pressure varchar(10),blsugar float,more text)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS queue(qid integer primary key autoincrement,pid integer,deid integer,rid integer,drid integer,timestamp date,start double,end double,stayed integer)");
     }
 
     @Override

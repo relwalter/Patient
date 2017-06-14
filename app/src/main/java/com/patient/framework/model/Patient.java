@@ -1,5 +1,7 @@
 package com.patient.framework.model;
 
+import java.util.Random;
+
 public class Patient {
     int pid;
     String name;
@@ -83,4 +85,6 @@ public class Patient {
     public String[] getInfo(){
         return new String[]{Integer.toString(pid),name,gender,Integer.toString(age),card};
     }
+
+    
 }
