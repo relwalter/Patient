@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class QueueRepository {
+
     private SQLiteDatabase db;
 
     public QueueRepository(Context context){
@@ -58,9 +59,13 @@ public class QueueRepository {
             try {
                 cursor.moveToFirst();
                 SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String timeStamp=cursor.getString(5);
+                if(timeStamp==null||"".equals(timeStamp)){
+                    timeStamp=dateFormat.format(new Date());
+                }
                 return new Queue(cursor.getInt(0),cursor.getInt(1),
                         cursor.getInt(2),cursor.getInt(3),
-                        cursor.getInt(4),dateFormat.parse(cursor.getString(5)),
+                        cursor.getInt(4),dateFormat.parse(timeStamp),
                         cursor.getDouble(6),cursor.getDouble(7),
                         cursor.getInt(8));
             }catch(Exception e){

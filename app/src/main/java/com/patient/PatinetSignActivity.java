@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.patient.framework.model.Patient;
@@ -28,6 +29,7 @@ public class PatinetSignActivity extends AppCompatActivity {
             currentPressure,currentBlsugar,currentMore;
     private TextView mrealNameView,mNameEditView,mHeightView,mWeightView,mTempView,mBreathView,mPulseView,
             mPressureView,mBlsugarView,mMoreView;
+    private ImageView mImageView;
     private EditText mHeightEditView,mWeightEditView,mTempEditView,mBreathEditView,mPulseEditView,
             mPressureEditView,mBlsugarEditView,mMoreEditView;
     private FloatingActionButton fab,fab_edit;

@@ -2,11 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
+        <!--<item-->
+                <!--android:id="@+id/nav_index"-->
+                <!--android:icon="@mipmap/ic_widgets_black_48dp"-->
+                <!--android:title="开始"-->
+                <!--android:checked="true"/>-->
         <item
-                android:id="@+id/nav_index"
-                android:icon="@mipmap/ic_widgets_black_48dp"
-                android:title="开始"
-                android:checked="true"/>
+                android:id="@+id/nav_act"
+                android:icon="@mipmap/ic_credit_card_black_48dp"
+                android:title="@string/title"/>
         <item
                 android:id="@+id/nav_act1"
                 android:icon="@mipmap/ic_assistant_black_48dp"

@@ -45,11 +45,12 @@ public class Main2Activity extends AppCompatActivity
         patientRepository=new PatientRepository(Main2Activity.this);
         String eml=getSharedPreferences("current",MODE_PRIVATE).getString("eml","");
         String card=getSharedPreferences("current",MODE_PRIVATE).getString("card","");
+        int imageSource=getSharedPreferences("current",MODE_PRIVATE).getInt("avatar",R.drawable.user_young);
         String name=patientRepository.getPatient(card).getName();
-
         navigationView=(NavigationView)findViewById(R.id.nav_view);
         View headerView=navigationView.getHeaderView(0);
         mImageView=(ImageView)headerView.findViewById(R.id.imageView);
+        mImageView.setImageResource(imageSource);
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,10 +162,13 @@ public class Main2Activity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         drawer.closeDrawer(GravityCompat.START);
-        if (id == R.id.nav_index) {
-
-        } else if (id == R.id.nav_act1) {
+//        if (id == R.id.nav_index) {
+//
+//        } else
+        if (id == R.id.nav_act){
             Smoother.startActivity(Main2Activity.this,MainActivity.class);
+        } else if (id == R.id.nav_act1) {
+            Smoother.startActivity(Main2Activity.this,RegisterActivity.class);
         } else if (id == R.id.nav_act2) {
             Smoother.startActivity(Main2Activity.this,ProfileActivity.class);
         } else if (id == R.id.nav_act3) {
@@ -217,7 +221,7 @@ public class Main2Activity extends AppCompatActivity
 
     public static void conduct(String keyword){
         if(keyword.equals("reg")){
-
+            context.startActivity(new Intent(context,RegisterActivity.class));
         }else if(keyword.equals("pro")){
             context.startActivity(new Intent(context,ProfileActivity.class));
         }else if(keyword.equals("sign")){

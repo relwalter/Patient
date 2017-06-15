@@ -24,6 +24,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     private String currentRealName,currentEml,currentCard,currentPhone,currentGender,currentAge;
     private TextView mrealNameView,mEmlEditView,mrealNameEditView,mNameView,mEmlView,mCardView,mPhoneView,mGenderView,mAgeView;
+    private ImageView mImageView,mEditImageView;
+    private int imageSource;
     private EditText mNameEditView,mCardEditView,mPhoneEditView,mGenderEditView,mAgeEditView;
     private FloatingActionButton fab,fab_edit;
     private UserRepository userServices;
@@ -38,6 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void loadProfileView(){
         setContentView(R.layout.activity_profile);
+        mImageView=(ImageView) findViewById(R.id.fab1);
         mrealNameView=(TextView) findViewById(R.id.realname_profile);
         mEmlView=(TextView) findViewById(R.id.eml_profile);
         mCardView=(TextView) findViewById(R.id.card_profile);
@@ -48,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
         userServices=UserRepository.getInstance(ProfileActivity.this);
         patientServices=new PatientRepository(ProfileActivity.this);
         sharedPreferences=getSharedPreferences("current",MODE_PRIVATE);
+        imageSource=sharedPreferences.getInt("avatar",R.drawable.user_young);
         setProfileView();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_profile);
         setSupportActionBar(toolbar);
@@ -104,6 +108,7 @@ public class ProfileActivity extends AppCompatActivity {
         currentGender=patientInfo[2];
         currentAge=patientInfo[3];
         currentPhone=userInfo[4];
+        mImageView.setImageResource(imageSource);
         mrealNameView.setText(currentRealName);
         mEmlView.setText(currentEml);
         mCardView.setText(currentCard);
@@ -121,6 +126,7 @@ public class ProfileActivity extends AppCompatActivity {
         mNameEditView=(EditText) findViewById(R.id.name_profile_edit);
         mGenderEditView=(EditText) findViewById(R.id.gender_profile_edit);
         mAgeEditView=(EditText) findViewById(R.id.age_profile_edit);
+        mEditImageView=(ImageView) findViewById(R.id.img_profile_edit);
         currentCard=sharedPreferences.getString("card","");
         currentEml=sharedPreferences.getString("eml","");
         String[] userInfo=userServices.getUser(currentEml).getInfo();
@@ -136,6 +142,7 @@ public class ProfileActivity extends AppCompatActivity {
         mNameEditView.setText(currentRealName);
         mGenderEditView.setText(currentGender);
         mAgeEditView.setText(currentAge);
+        mEditImageView.setImageResource(imageSource);
     }
 
     private boolean saveProfile(){

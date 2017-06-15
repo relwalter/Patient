@@ -34,13 +34,14 @@
     <string name="agreement">同意用户服务条款</string>
     <string name="title_activity_settings">设置</string>
     <string name="title_about">关于</string>
+    <string name="title">我的诊疗卡</string>
     <string name="title_1">预约挂号</string>
     <string name="title_2">查看资料</string>
     <string name="title_3">查看体征</string>
     <string name="text_1">在线预约更省心，现在开始挂号。</string>
     <string name="text_2">完善个人基本资料才可以预约挂号哦~</string>
     <string name="text_3">提前录入体征，就诊更快捷。</string>
-
+    <string name="noMore">&gt;.&lt;已经到底了...</string>
     <!-- Strings related to Settings -->
     <string name="name">用户</string>
     <string name="eml">someone@example.com</string>

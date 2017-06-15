@@ -200,6 +200,13 @@ public class CompleteInfoActivity extends AppCompatActivity {
         editor.putString("gender",currentPatient.getGender());
         editor.putInt("age",currentPatient.getAge());
         editor.putBoolean("valid",true);
+        int imageSource=R.drawable.user_young;
+        if("男".equals(currentPatient.getGender())||"Male".equals(currentPatient.getGender())){
+            imageSource=R.drawable.user_male;
+        }else if("女".equals(currentPatient.getGender())||"Female".equals(currentPatient.getGender())){
+            imageSource=R.drawable.user_female;
+        }
+        editor.putInt("avatar",imageSource);
         editor.commit();
     }
 

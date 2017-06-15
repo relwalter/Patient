@@ -12,5 +12,12 @@
     <color name="white">#ffffff</color>
     <color name="gray">#6e6e6e</color>
 
+    <color name="dust">#F0DF98</color>
+    <color name="lightOrange">#FCC689</color>
+    <color name="lightPurple">#E6AABB</color>
+    <color name="blueGray">#94A0B6</color>
+    <color name="primaryBlue">#3F96C3</color>
+
+
     <color name="black_overlay">#66000000</color>
 </resources>

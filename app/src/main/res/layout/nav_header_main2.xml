@@ -15,7 +15,7 @@
     <ImageView
             android:layout_width="72dp"
             android:layout_height="72dp"
-            app:srcCompat="@drawable/avatar"
+            app:srcCompat="@drawable/user_young"
             android:id="@+id/imageView">
     </ImageView>
 

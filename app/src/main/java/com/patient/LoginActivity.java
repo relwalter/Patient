@@ -28,8 +28,10 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import com.patient.framework.model.Patient;
+import com.patient.framework.model.Queue;
 import com.patient.framework.model.User;
 import com.patient.framework.repository.PatientRepository;
+import com.patient.framework.repository.QueueRepository;
 import com.patient.framework.repository.UserRepository;
 import com.patient.framework.service.UserServices;
 
@@ -49,6 +51,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     private UserRepository userRepository;
     private PatientRepository patientRepository;
+    private QueueRepository queueRepository;
     private User current;
     private String email,password;
 
@@ -57,14 +60,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
         sharedPreferences=getSharedPreferences("current",MODE_PRIVATE);
         if(sharedPreferences.getBoolean("valid",false)){
-            startActivity(new Intent(LoginActivity.this,Main2Activity.class));
-            finish();
+            if(sharedPreferences.getBoolean("queue",false)){
+                Intent[] intents={new Intent(LoginActivity.this,Main2Activity.class),
+                        new Intent(LoginActivity.this,MainActivity.class)};
+                startActivities(intents);
+                finish();
+            }else{
+                startActivity(new Intent(LoginActivity.this,Main2Activity.class));
+                finish();
+            }
         }
 
         userRepository=UserRepository.getInstance(LoginActivity.this);
+        queueRepository=new QueueRepository(LoginActivity.this);
         current=new User();
 
         // Set up the login form.
@@ -170,6 +180,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         editor.putString("gender",currentPatient.getGender());
         editor.putInt("age",currentPatient.getAge());
         editor.putBoolean("valid",true);
+        if(queueRepository.getQueue(currentPatient.getId(),1)!=null){
+            editor.putBoolean("reg",true);
+            editor.putBoolean("queue",true);
+        }else{
+            editor.putBoolean("reg",false);
+            editor.putBoolean("queue",false);
+        }
+        int imageSource=R.drawable.user_young;
+        if("男".equals(currentPatient.getGender())||"Male".equals(currentPatient.getGender())){
+            imageSource=R.drawable.user_male;
+        }else if("女".equals(currentPatient.getGender())||"Female".equals(currentPatient.getGender())){
+            imageSource=R.drawable.user_female;
+        }
+        editor.putInt("avatar",imageSource);
         editor.commit();
     }
 
@@ -222,7 +246,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         startActivity(intent);
                     }else{
                         Toast.makeText(this,"请完善您的基本资料",Toast.LENGTH_SHORT).show();
-                        Intent intent=new Intent(LoginActivity.this,CompleteInfoActivity.class);
+                        Intent intent=new Intent(LoginActivity.this,
+                                CompleteInfoActivity.class);
                         intent.putExtra("card",card);
                         finish();
                         startActivity(intent);
