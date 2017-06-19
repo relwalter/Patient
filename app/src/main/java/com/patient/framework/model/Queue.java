@@ -80,14 +80,6 @@ public class Queue {
         this.drId = drId;
     }
 
-    public int getqId() {
-        return qId;
-    }
-
-    public void setqId(int qId) {
-        this.qId = qId;
-    }
-
     public Date getTimeStamp() {
         return timeStamp;
     }

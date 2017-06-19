@@ -49,7 +49,7 @@
             android:textAlignment="textStart"/>
 
     <TextView
-            android:text="　应用系第一安卓小组成员吴志敏、苏丹和颜笑金所著，版权所有，引用请注明出处。"
+            android:text="　应用系第一安卓小组成员吴志敏、苏丹和颜笑金所著。版权所有，引用请注明出处。"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"

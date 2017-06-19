@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         userRepository=UserRepository.getInstance(LoginActivity.this);
-        queueRepository=new QueueRepository(LoginActivity.this);
+        queueRepository=QueueRepository.getInstance(LoginActivity.this);
         current=new User();
 
         // Set up the login form.
@@ -187,6 +187,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             editor.putBoolean("reg",false);
             editor.putBoolean("queue",false);
         }
+//        editor.putBoolean("reg",false);
+//        editor.putBoolean("queue",false);
+//        editor.putString("predTime","");
         int imageSource=R.drawable.user_young;
         if("男".equals(currentPatient.getGender())||"Male".equals(currentPatient.getGender())){
             imageSource=R.drawable.user_male;

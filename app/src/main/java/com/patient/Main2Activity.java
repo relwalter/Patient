@@ -141,10 +141,7 @@ public class Main2Activity extends AppCompatActivity
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            SharedPreferences.Editor editor
-                                    =getSharedPreferences("current",MODE_PRIVATE).edit();
-                            editor.putBoolean("valid",false);
-                            editor.commit();
+                            invalidate();
                             startActivity(new Intent(Main2Activity.this,LoginActivity.class));
                             finish();
                         }
@@ -183,10 +180,7 @@ public class Main2Activity extends AppCompatActivity
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            SharedPreferences.Editor editor
-                                    =getSharedPreferences("current",MODE_PRIVATE).edit();
-                            editor.putBoolean("valid",false);
-                            editor.commit();
+                            invalidate();
                             finish();
                             Smoother.startActivity(Main2Activity.this,LoginActivity.class);
                         }
@@ -227,6 +221,22 @@ public class Main2Activity extends AppCompatActivity
         }else if(keyword.equals("sign")){
             context.startActivity(new Intent(context,PatinetSignActivity.class));
         }
+    }
+
+    private void invalidate(){
+        SharedPreferences.Editor editor
+                =getSharedPreferences("current",MODE_PRIVATE).edit();
+        editor.putBoolean("valid",false);
+        editor.putBoolean("reg",false);
+        editor.putBoolean("queue",false);
+        editor.putInt("qtime",-1);
+        editor.putInt("before",0);
+        editor.putString("name","");
+        editor.putString("card","");
+        editor.putString("eml","");
+        editor.putString("psw","");
+        editor.putString("pid","");
+        editor.commit();
     }
 
 }

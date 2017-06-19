@@ -1,6 +1,7 @@
 package com.patient.framework.service;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 import com.patient.framework.model.*;
 import com.patient.framework.repository.QueueRepository;
@@ -14,7 +15,7 @@ import java.net.URL;
 import java.util.Calendar;
 
 
-public class MakePrediction {
+public class MakePrediction{
     private final String target="https://vottery.higherloft.com/pred?";
     private Patient patient;
     private PatientSign patientSign;
@@ -54,6 +55,7 @@ public class MakePrediction {
     public String getResult(){
         String postData="feat="+"["+patientId+","+patientAge+","+patientSignIndex+","+before+","+
                 startTime+","+hourOfDay+","+dayOfWeek+","+spentWithDoctor+"]";
+        Log.d("data",postData);
         HttpURLConnection connection=getConnection(postData);
         try{
             String result;
@@ -62,7 +64,7 @@ public class MakePrediction {
             while((result=bufferedReader.readLine())!=null){
                 Log.d("result: ",result);
                 return result.replace("[","").replace("]","")
-                        .replace("-","");
+                        .replace("-","").replace(" ","");
             }
         }catch(Exception e){
             e.printStackTrace();
